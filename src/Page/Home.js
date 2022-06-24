@@ -1,4 +1,10 @@
+import SectionThird from '../components/SectionThird'
+
 function Home() {
-  return <div>HOME</div>
+  return (
+    <div>
+      <SectionThird />
+    </div>
+  )
 }
 export default Home
