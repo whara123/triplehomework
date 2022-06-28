@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { ContentAnimation } from '../utils/ContentAnimation'
+import { contentAnimation } from '../utils/ContentAnimation'
 import { ImageStroage } from '../utils/ImageStorage'
 
 function AppLogo() {
@@ -19,7 +19,7 @@ const AppOfTheYear = styled.article`
   padding-top: 280px;
   font-size: 15px;
   text-align: center;
-  ${ContentAnimation};
+  ${contentAnimation};
   color: rgba(58, 58, 58, 0.7);
 `
 

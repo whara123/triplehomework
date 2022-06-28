@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import uuid from 'react-uuid'
 
-import { ContentAnimation } from '../utils/ContentAnimation'
-import { indicatorData } from '../utils/IndicatorData'
+import { contentAnimation } from '../utils/ContentAnimation'
+import { indicatorData } from '../utils/ContentData'
 
 import IndicatorContent from './IndicatorContent'
 
@@ -24,7 +24,7 @@ const TripleIndicators = styled.ul`
   margin-left: 623px;
   padding-top: 150px;
   opacity: 0;
-  ${ContentAnimation};
+  ${contentAnimation};
   animation-delay: 100ms;
 `
 

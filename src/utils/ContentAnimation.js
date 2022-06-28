@@ -11,6 +11,6 @@ const contentAnim = keyframes`
   }
 `
 
-export const ContentAnimation = css`
+export const contentAnimation = css`
   animation: ${contentAnim} 700ms ease-in-out forwards;
 `
