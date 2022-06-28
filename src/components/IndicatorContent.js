@@ -22,7 +22,7 @@ function IndicatorContent({ target, content }) {
 
       const next = currentIncrease / 10
       currentIncrease -= next
-    }, 30)
+    }, 40)
   }
 
   useEffect(() => {
