@@ -2,9 +2,10 @@ import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
  * {
-    font-size: inherit;
     padding: 0;
     margin: 0;
+    font-size: inherit;
+    font-family: sans-serif;
     box-sizing: border-box;
   }
   html, body, #root {
