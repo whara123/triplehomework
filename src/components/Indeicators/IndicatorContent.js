@@ -25,7 +25,7 @@ function IndicatorContent({ target, content }) {
   }
 
   useEffect(() => {
-    setTimeout(() => counter(setTargetNumber, target))
+    counter(setTargetNumber, target)
   }, [target])
 
   return (
