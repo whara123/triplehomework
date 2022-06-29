@@ -209,3 +209,4 @@ useEffect(() => {
   counter(setTargetNumber, target)
 }, [target])
 ```
+![과제](https://user-images.githubusercontent.com/64121533/176393202-23d70db3-0202-467b-86e9-7f6a0b1d1d43.gif)
