@@ -1,10 +1,6 @@
-import SectionThird from '../components/SectionThird'
+import StatisticSection from '../components/StatisticSection'
 
 function Home() {
-  return (
-    <div>
-      <SectionThird />
-    </div>
-  )
+  return <StatisticSection />
 }
 export default Home
