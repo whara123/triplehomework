@@ -1,70 +1,211 @@
-# Getting Started with Create React App
+# triple-homework
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 실행 방법
 
-## Available Scripts
+```
+npm install
+npm start
+```
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+## 사용한 기술과 선택한 이유
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **styled-components**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- props 값에 따른 스타일 적용을 위해 사용
 
-### `npm test`
+```js
+  background-image: ${(props) =>
+    props.name === 'google'
+      ? `url(${ImageStroage.playStore})`
+      : `url(${ImageStroage.appleBadge})`};
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### **styled-components 1. GlobalStyle**
 
-### `npm run build`
+- createGlobalStyle으로 GlobalStyle을 생성하여 최상위 컴포넌트에 사용
+- 하위 컴포넌트 스타일이 동일한 내용들을 적용
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+function App() {
+  return (
+    <>
+      <GlobalStyle />
+      <Home />
+    </>
+  )
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **styled-components 2. Animation**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 컴포넌트 별로 동일한 애니메이션(위로 위치 변경, 페이드인/아웃 애니메이션) 적용을 위해 utils폴더에 애니메이션 js 파일 생성
 
-### `npm run eject`
+```js
+import { keyframes, css } from 'styled-components'
+.
+.
+.
+export const contentAnimation = css`
+animation: ${contentAnim} 700ms ease-in-out forwards;
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<br />
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **props-type**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- 부모로부터 전달받은 prop의 데이터 type을 검사
+- 예상치 못한 오류 방지
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+function GradeContent({ platform, platformStore, contents }) {
+  GradeContent.propTypes = {
+    platform: PropTypes.string.isRequired,
+    platformStore: PropTypes.string.isRequired,
+    contents: PropTypes.string.isRequired,
+  }
+}
+```
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **컴포넌트**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+섹션의 컨텐츠를 세가지 컴포넌트로 분리
 
-### Code Splitting
+```js
+import Indicator from './Indeicators/Indicator'
+import Grades from './Awards/Grades'
+import AppLogo from './ContentLogo/AppLogo'
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+function StatisticSection() {
+  return (
+    <SectionBody>
+      <ContentWrap>
+        <AppLogo />
+        <Indicator />
+        <Grades />
+      </ContentWrap>
+    </SectionBody>
+  )
+}
+```
 
-### Analyzing the Bundle Size
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **Data 분리**
 
-### Making a Progressive Web App
+- ImageStroage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+이미지를 한 곳에서 관리하도록 파일 분리
 
-### Advanced Configuration
+```js
+import playStore from '../image/play-store2x.png'
+import appleBadge from '../image/badge-apple4x.png'
+import tripleLogo from '../image/triple2x.png'
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export const ImageStroage = {
+  tripleLogo,
+  appleBadge,
+  playStore,
+}
+```
 
-### Deployment
+필요한 컴포넌트에서 import 후 사용
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+import { ImageStroage } from '../../utils/ImageStorage'
+ .
+ .
+ .
+background-image: url(${ImageStroage.tripleLogo});
+ .
+ .
+```
 
-### `npm run build` fails to minify
+- ContentData
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+지표, 수상 내역은 컨텐츠의 컴포넌트 분리를 위해 데이터를 생성
+
+```js
+export const indicatorData = [
+  {
+    content: '여행자',
+    targetNumber: 700,
+  },
+  {
+    content: '여행 리뷰',
+    targetNumber: 100,
+  },
+  {
+    content: '여행 일정',
+    targetNumber: 470,
+  },
+]
+
+export const gradesData = [
+  {
+    platform: 'google',
+    platformStore: '2018 구글 플레이스토어',
+    contents: '올해의 앱 최우수상 수상',
+  },
+  {
+    platform: 'apple',
+    platformStore: '2018 애플 앱스토어',
+    contents: '오늘의 여행앱 선정',
+  },
+]
+```
+
+```js
+import { indicatorData } from '../../utils/ContentData'
+.
+.
+function Indicator() {
+  return (
+    <TripleIndicators>
+      {indicatorData.map((data) => (
+        <IndicatorContent
+          key={uuid()}
+          content={data.content}
+          target={data.targetNumber}
+        />
+      ))}
+    </TripleIndicators>
+  )
+}
+UUID는 키 값을 위해 사용
+```
+
+<br/>
+
+### **숫자 상승 애니메이션**
+
+useState로 목표 숫자를 0으로 초기화, `counter` 함수에서 setTargetNumber으로 목표 숫자까지 값 변경
+
+- `currentIncrease`변수를 생성해서 목표 숫자에서 변수를 뺀 값을 `setTargetNumber`로 숫자를 변경
+- `currentIncrease`변수 증가값을 점차 줄이면서 시간차가 생기도록 구현
+- `currentIncrease`의 정수 값이 0이 되면 clearInterval로 정지
+
+```js
+const [targetNumber, setTargetNumber] = useState(0)
+
+const counter = (setNumber, targetNumber) => {
+  let currentIncrease = targetNumber
+
+  const delayCounter = setInterval(() => {
+    setNumber(Math.ceil(targetNumber - currentIncrease))
+
+    if (Math.floor(currentIncrease) === 0) {
+      clearInterval(delayCounter)
+    }
+
+    currentIncrease -= currentIncrease / 10
+  }, 40)
+}
+
+useEffect(() => {
+  counter(setTargetNumber, target)
+}, [target])
+```
